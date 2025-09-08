@@ -1,13 +1,11 @@
 {% extends "_base.html" %}
 
-{% block page_title %}
-    Home
-{%  endblock page_title %}
+{% block page_title %}Home{%  endblock page_title %}
 
 {%  block content %}
     <h1>Home Page</h1>
     {% if user.is_authenticated %}
-        <form action="{% url 'logout' %}" method="post">
+        <form class="mt-3" action="{% url 'logout' %}" method="post">
             {% csrf_token %}
             <p>Welcome {{ user.username }} |  <button class="btn btn-danger" type="submit">logout</button></p>
         </form>
