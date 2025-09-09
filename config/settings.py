@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     #my_apps
     'pages',
     'accounts',
+    'books',
 ]
 
 MIDDLEWARE = [
