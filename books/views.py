@@ -1,6 +1,6 @@
 from django.views import generic
 
-from books.models import Book
+from .models import Book
 
 
 class BookListView(generic.ListView):
@@ -12,3 +12,9 @@ class BookDetailView(generic.DetailView):
     model = Book
     template_name = 'books/book_detail.html'
     context_object_name = 'book'
+
+class BookCreateView(generic.CreateView):
+    model = Book
+    fields = ['title', 'author', 'content', 'price']
+    template_name = 'books/book_create.html'
+
