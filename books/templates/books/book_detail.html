@@ -11,6 +11,7 @@
     <p>قیمت : {{ book.price }}</p>
     <br>
     <a href="{% url 'book_update' book.id %}"><button class="btn btn-info" type="button">ویرایش</button></a>
+    <a href="{% url 'book_delete' book.id %}"><button class="btn btn-danger" type="button">حذف</button></a>
     <br>
     <a href="{%  url 'book_list' %}">بازگشت</a>
 {%  endblock content %}
