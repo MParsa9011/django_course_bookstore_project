@@ -3,10 +3,10 @@
 {% block page_title %}{{ book.title }}{% endblock page_title %}
 
 {%  block content %}
-    <h1>{{ book.title }}</h1>
+    <h1>{{ book.title|capfirst }}</h1>
      <p>اثر : {{ book.author }}</p>
     <br>
-    <p>{{ book.content }}</p>
+    <p>{{ book.content|linebreaksbr }}</p>
     <br>
     <p>قیمت : {{ book.price }}</p>
     <br>
