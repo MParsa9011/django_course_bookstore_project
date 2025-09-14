@@ -9,6 +9,8 @@ class BookListView(generic.ListView):
     paginate_by = 8
     template_name = 'books/book_list.html'
     context_object_name = 'books'
+    def get_queryset(self):
+        return Book.objects.order_by('date_added')
 
 class BookDetailView(generic.DetailView):
     model = Book
