@@ -19,12 +19,12 @@ class BookDetailView(generic.DetailView):
 
 class BookCreateView(generic.CreateView):
     model = Book
-    fields = ['title', 'author', 'translator', 'publisher', 'content', 'price', 'cover']
+    fields = ['title', 'author', 'translator', 'publisher', 'content', 'pages', 'price', 'cover', 'status']
     template_name = 'books/book_create.html'
 
 class BookUpdateView(generic.UpdateView):
     model = Book
-    fields = ['title', 'author', 'translator', 'publisher', 'content', 'price', 'cover']
+    fields = ['title', 'author', 'translator', 'publisher', 'content', 'pages', 'price', 'cover', 'status']
     template_name = 'books/book_update.html'
 
 class BookDeleteView(generic.DeleteView):
