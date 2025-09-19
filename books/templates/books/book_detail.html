@@ -119,18 +119,12 @@
     <div class="card card-custom my-3 p-5 w-sm-75 w-100">
       <h2 class="mb-5">نظرات:</h2>
 
-      <div class="comment-block">
-        <h5 class="mb-2">نوشین توکلی</h5>
-        <p>با سلام چند تا نکته میخواستم بگم اول اینکه من …</p>
-      </div>
-      <div class="comment-block">
-        <h5 class="mb-2">نوشین توکلی</h5>
-        <p>با سلام چند تا نکته میخواستم بگم اول اینکه من …</p>
-      </div>
-      <div class="comment-block">
-        <h5 class="mb-2">نوشین توکلی</h5>
-        <p>با سلام چند تا نکته میخواستم بگم اول اینکه من …</p>
-      </div>
+      {% for comment in comments %}
+          <div class="comment-block">
+            <h5 class="mb-2">{{ comment.user }}</h5>
+            <p>{{ comment|linebreaks }}</p>
+          </div>
+      {% endfor %}
     </div>
   </div>
 
