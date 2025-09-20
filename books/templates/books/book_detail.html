@@ -1,155 +1,199 @@
 {% extends '_base.html' %}
+{% load crispy_forms_tags %}
 
 {% block page_title %}{{ book.title }}{% endblock page_title %}
 
 {% block content %}
-<style>
-/* —- انیمیشن ورود عمومی —- */
-.fade-up {
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeUp .6s forwards;
-}
-@keyframes fadeUp {
-  to {opacity:1; transform:translateY(0);}
-}
+    <style>
+        /* —- انیمیشن ورود عمومی —- */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp .6s forwards;
+        }
 
-/* —- عکس کتاب —- */
-.book-cover {
-  border-radius: 1rem;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-  transition: transform .3s ease;
-}
-.book-cover:hover {
-  transform: scale(1.03);
-}
+        @keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
-/* —- عنوان کتاب —- */
-.book-title {
-  font-weight: bold;
-  font-size: 2rem;
-  margin-bottom: .5rem;
-}
+        /* —- عکس کتاب —- */
+        .book-cover {
+            border-radius: 1rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            transition: transform .3s ease;
+        }
 
-/* —- دکمه‌ها —- */
-.btn-warning, .btn-danger, .btn-primary {
-  border-radius: 50rem;
-  transition: all .3s ease;
-}
-.btn-warning:hover {
-  background-color: #f59e0b;
-}
-.btn-danger:hover {
-  background-color: #dc2626;
-}
-.btn-primary:hover {
-  background-color: #2563eb;
-}
+        .book-cover:hover {
+            transform: scale(1.03);
+        }
 
-/* —- کارت‌های نظرات و فرم —- */
-.card-custom {
-  border: none;
-  border-radius: 1rem;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-  transition: box-shadow .3s ease;
-}
-.card-custom:hover {
-  box-shadow: 0 12px 32px rgba(0,0,0,0.15);
-}
+        /* —- عنوان کتاب —- */
+        .book-title {
+            font-weight: bold;
+            font-size: 2rem;
+            margin-bottom: .5rem;
+        }
 
-/* —- بخش نظرها —- */
-.comment-block {
-  border-bottom: 1px solid #e5e5e5;
-  padding-bottom: 1rem;
-  margin-bottom: 1rem;
-}
-.comment-block:last-child {
-  border-bottom: none;
-}
+        /* —- دکمه‌ها —- */
+        .btn-warning, .btn-danger, .btn-primary {
+            border-radius: 50rem;
+            transition: all .3s ease;
+        }
 
-/* —- فرم —- */
-.form-control {
-  border-radius: .75rem;
-  box-shadow: none;
-  transition: box-shadow .3s ease, border-color .3s ease;
-}
-.form-control:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 .2rem rgba(37,99,235,.25);
-}
-</style>
+        .btn-warning:hover {
+            background-color: #f59e0b;
+        }
 
-<div class="container mt-5" dir="rtl">
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
 
-  <!-- بخش بالا -->
-  <div class="d-flex justify-content-center fade-up" style="animation-delay:.1s">
-    <div class="row w-sm-75 w-100">
-      <div class="col-xs-12 col-md-3 d-flex justify-content-center mb-3 mb-md-0">
-        <img src="{{ book.cover.url }}" class="img-fluid book-cover" alt="{{ book.title }}">
-      </div>
+        .btn-primary:hover {
+            background-color: #2563eb;
+        }
 
-      <div class="col-xs-12 col-md-6 text-center text-md-end mt-md-1 mt-4">
-        <h1 class="book-title">{{ book.title }}</h1>
-        <h5 class="small my-1 text-muted">نویسنده: <span class="text-dark">{{ book.author }}</span></h5>
-        <h5 class="small my-1 text-muted">مترجم: <span class="text-dark">{{ book.translator }}</span></h5>
-        <h5 class="small my-1 text-muted">انتشارات: <span class="text-dark">{{ book.publisher }}</span></h5>
-        <div class="mt-3">
-          <a class="btn btn-warning me-2" href="{% url 'book_update' book.id %}">ویرایش</a>
-          <a class="btn btn-danger" href="{% url 'book_delete' book.id %}">حذف</a>
+        /* —- کارت‌های سفارشی —- */
+        .card-custom {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            transition: box-shadow .3s ease;
+            background-color: #fff;
+        }
+
+        .card-custom:hover {
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+        }
+
+        /* —- بخش نظرها —- */
+        .comment-block {
+            border-bottom: 1px solid #e5e5e5;
+            padding-bottom: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .comment-block:last-child {
+            border-bottom: none;
+        }
+
+        /* —- فرم —- */
+        .form-control {
+            border-radius: .75rem;
+            box-shadow: none;
+            transition: box-shadow .3s ease, border-color .3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 .2rem rgba(37, 99, 235, .25);
+        }
+
+        .badge-pill {
+            border-radius: 50rem;
+            padding: 0.6rem 1rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: transform .2s ease, opacity .2s ease;
+        }
+
+        .badge-pill:hover {
+            transform: scale(1.05);
+            opacity: 0.9;
+        }
+
+
+    </style>
+
+    <div class="container mt-5" dir="rtl">
+
+        <!-- بخش بالا -->
+        <div class="d-flex justify-content-center fade-up" style="animation-delay:.1s">
+            <div class="row w-sm-75 w-100">
+                <div class="col-xs-12 col-md-3 d-flex justify-content-center mb-3 mb-md-0">
+                    <img src="{{ book.cover.url }}" class="img-fluid book-cover" alt="{{ book.title }}">
+                </div>
+
+                <div class="col-xs-12 col-md-6 text-center text-md-end mt-md-1 mt-4">
+                    <h1 class="book-title">{{ book.title }}</h1>
+                    <h5 class="small my-1 text-muted">نویسنده: <span class="text-dark">{{ book.author }}</span></h5>
+                    <h5 class="small my-1 text-muted">مترجم: <span class="text-dark">{{ book.translator }}</span></h5>
+                    <h5 class="small my-1 text-muted">انتشارات: <span class="text-dark">{{ book.publisher }}</span></h5>
+                    <div class="mt-3">
+                        <a class="btn btn-warning me-2" href="{% url 'book_update' book.id %}">ویرایش</a>
+                        <a class="btn btn-danger" href="{% url 'book_delete' book.id %}">حذف</a>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-3 d-flex flex-column mt-3 mt-md-0">
+                    <h3 class="align-self-center pt-2 text-muted align-self-md-end fade-up" style="animation-delay:.2s">
+                        {{ book.price }} هزار تومان
+                    </h3>
+                </div>
+            </div>
         </div>
-      </div>
 
-      <div class="col-xs-12 col-md-3 d-flex flex-column mt-3 mt-md-0">
-        <h3 class="align-self-center pt-2 text-muted align-self-md-end fade-up" style="animation-delay:.2s">
-          {{ book.price }} هزار تومان
-        </h3>
-      </div>
-    </div>
-  </div>
-
-  <!-- متن کتاب -->
-  <div class="d-flex justify-content-center fade-up" style="animation-delay:.3s">
-    <div class="my-3 p-5 w-sm-75 w-100 card-custom">
-      {{ book.content|linebreaks }}
-    </div>
-  </div>
-
-  <!-- نظرات -->
-  <div class="d-flex justify-content-center fade-up" style="animation-delay:.4s">
-    <div class="card card-custom my-3 p-5 w-sm-75 w-100">
-      <h2 class="mb-5">نظرات:</h2>
-
-      {% for comment in comments %}
-          <div class="comment-block">
-            <h5 class="mb-2">{{ comment.user }}</h5>
-            <p>{{ comment|linebreaks }}</p>
-          </div>
-      {% endfor %}
-    </div>
-  </div>
-
-  <!-- فرم نظر -->
-  <div class="d-flex justify-content-center fade-up" style="animation-delay:.5s">
-    <div class="card card-custom my-3 p-5 w-sm-75 w-100">
-      <h3 class="mb-4">نظر خود را وارد کنید:</h3>
-      <form method="POST">
-        <div class="form-group py-2">
-          <label class="py-1" for="author_name">نام شما:</label>
-          <input type="text" class="form-control" placeholder="علی علوی" name="author_name">
+        <!-- متن کتاب -->
+        <div class="d-flex justify-content-center fade-up" style="animation-delay:.3s">
+            <div class="my-3 p-5 w-sm-75 w-100 card-custom">
+                {{ book.content|linebreaks }}
+            </div>
         </div>
-        <div class="form-group py-2">
-          <label class="py-1" for="email">ایمیل شما:</label>
-          <input type="email" class="form-control" placeholder="example@gmail.com" name="email">
-        </div>
-        <div class="form-group py-2">
-          <label class="py-1" for="comment_text">متن نظر:</label>
-          <textarea class="form-control" name="text" rows="3"
-                    placeholder="نظر خود را اینجا وارد کنید."></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary mt-3">ارسال</button>
-      </form>
-    </div>
-  </div>
 
-</div>
+        <!-- نظرات -->
+        <div class="d-flex justify-content-center fade-up" style="animation-delay:.4s">
+
+            <div class="card card-custom my-3 p-5 w-sm-75 w-100">
+                <h2 class="mb-5">نظرات:</h2>
+                {% for comment in comments %}
+                    {% if comment.is_active %}
+                        <div class="comment-block">
+                            <h5 class="mb-2">{{ comment.user }}</h5>
+                            <p>{{ comment|linebreaks }}</p>
+
+                            {% if comment.recommended %}
+                                <span class="badge bg-secondary badge-pill">✅ توصیه میکنم</span>
+                            {% endif %}
+
+                            {% if comment.is_calming %}
+                                <span class="badge bg-success badge-pill">🌱 آرامش‌بخش</span>
+                            {% endif %}
+
+                            {% if comment.is_motivational %}
+                                <span class="badge bg-danger badge-pill">🚀 انگیزه‌بخش</span>
+                            {% endif %}
+
+                            {% if comment.is_uplifting %}
+                                <span class="badge bg-warning text-dark badge-pill">✨ حال خوب‌کن</span>
+                            {% endif %}
+
+                            {% if comment.is_educational %}
+                                <span class="badge bg-secondary badge-pill">📚 آموزنده</span>
+                            {% endif %}
+
+                        </div>
+                    {% endif %}
+                {% empty %}
+                    <p class="text-muted">هنوز نظری ثبت نشده است.</p>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <!-- فرم نظر -->
+        <div class="d-flex justify-content-center fade-up" style="animation-delay:.5s">
+            <div class="card card-custom my-3 p-5 w-sm-75 w-100">
+                <h3 class="mb-4">نظر خود را وارد کنید:</h3>
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ comment_form|crispy }}
+                    <button type="submit" class="btn btn-primary mt-3">ارسال</button>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
 {% endblock content %}
